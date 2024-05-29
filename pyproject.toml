@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "week 4 - agents"
+version = "0.1.0"
+description = ""
+authors = ["Deonna Hodges <dnhodges@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+langchain = ">=0.1.10,<0.2.0"
+crewai = { version = "^0.30.11", python = ">=3.11,<=3.13" }
+crewai-tools = ">=0.2.6,<0.3.0"
+chromadb = ">=0.4.22,<0.5.0"
+langchain-openai = ">=0.0.5,<0.0.6"
+google-auth-oauthlib = "^1.2.0"
+youtube-transcript-api = "^0.6.2"
+google = "^3.0.0"
+google-api-python-client = "^2.130.0"
+google-auth-httplib2 = "^0.2.0"
+nltk = "^3.8.1"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
