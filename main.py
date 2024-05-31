@@ -3,6 +3,7 @@ from typing import Union
 from fastapi import FastAPI
 
 from link_verifying_agent import LinkVerifyingAgent
+from query_parse_agent import QueryParsingAgent
 
 app = FastAPI()
 
@@ -14,8 +15,12 @@ async def read_root(q: Union[str, None] = None):
 
 @app.get("/test")
 async def test_endpoint():
-    message = "You just won the lottery! Visit www.t.co/lottery to claim your prize"
-    link_verifier = LinkVerifyingAgent()
-    result = link_verifier.verify_link(message)
-    return {"test": result}
+    message = "You just won the lottery! Visit www.getrichnowwithbitcoin.co/lottery to claim your prize"
+    return await handle_query(message)
+
+async def handle_query(query: str ):
+    parsed_query = QueryParsingAgent().parse_query(query)
+    link_info = LinkVerifyingAgent().verify_links(parsed_query)
+
+    return {"test": link_info}
 

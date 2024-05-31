@@ -1,4 +1,7 @@
+from typing import List
+import json
 import os
+from typing import Any, Dict
 from dotenv import load_dotenv, find_dotenv
 from langchain_openai import OpenAI  # Updated import statement based on warning
 from crewai import Agent, Task, Crew
@@ -25,16 +28,22 @@ class LinkVerifyingAgent:
         self.researcher = Agent(
             role='Spam link verifier',
             goal='Provide validated results that a website exists and is not a scam or spam website',
-            backstory='An expert analyst with a strong sense of duty to sniff out scams and explain how they know the link is legitimate',
+            backstory='An expert analyst with a strong sense of duty to sniff out scams and explain how they know the links are legitimate',
             tools=[search_tool, web_rag_tool],
             verbose=True
         )
 
+
     
-    def verify_link(self, message: str):
+    def verify_links(self, message: str):
         research = Task(
             description=f'Research a link for legitimacy. The message is: {message}',
-            expected_output='A summary of the top 3 reasons why the link is either legitimate or not trustworthy',
+            expected_output='''
+                A JSON object with the following keys:
+                - links: A list of links that have been checked
+                - scams: A list of scams that the link may be a part of ex. ["scam", "phishing", etc]
+                - reasons: A list of the top 3 reasons why the link is either legitimate or not trustworthy
+            ''',
             agent=self.researcher
         )
 
@@ -46,4 +55,24 @@ class LinkVerifyingAgent:
         )
 
         # Start the crew
-        return crew.kickoff()
+        result =  crew.kickoff()
+        self.persist_bad_links(json.loads(result))
+        return result
+
+    
+    def persist_bad_links(self, classification_result: Dict[str, Any]):  # Change type annotation
+        classification_output = classification_result  # No need to parse JSON since it's already Dict
+        links = classification_output.get("links", "")
+        scams = classification_output.get("scams", "")
+        if not scams:
+            print("No scams found")
+            return
+        
+        for link in links:
+            print(f"Link: {link}")
+            self.save_bad_link(link, scams)
+
+    def save_bad_link(self, link: str, scams: List[str]):  # Change type annotation
+        with open("store/bad_links.txt", "a") as file:
+            file.write(f"{link} : {scams}\n")
+
