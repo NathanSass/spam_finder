@@ -9,7 +9,7 @@ from crewai_tools import (
     WebsiteSearchTool
 )
 
-class LinkVerifier:
+class LinkVerifyingAgent:
     def __init__(self):
         # Load environment variables
         load_dotenv(find_dotenv())
