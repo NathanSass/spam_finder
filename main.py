@@ -18,6 +18,12 @@ async def test_endpoint():
     message = "You just won the lottery! Visit www.getrichnowwithbitcoin.co/lottery to claim your prize"
     return await handle_query(message)
 
+"""
+Steps:
+1. Parse the query
+2. Verify the links
+3. TODO: return something useful
+"""
 async def handle_query(query: str ):
     parsed_query = QueryParsingAgent().parse_query(query)
     link_info = LinkVerifyingAgent().verify_links(parsed_query)

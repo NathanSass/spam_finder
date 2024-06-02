@@ -11,6 +11,15 @@ from crewai_tools import (
     WebsiteSearchTool
 )
 
+"""
+This agent will operate on a vague query and return formatted json which will be more easily parceable
+for other agents.
+
+Possible sources of query:
+- a web extension that passes in some DOM elements, perhaps with minimal parsing. May include markup elements.
+- an android app that passes in the result of the screen being read.
+- etc.
+"""
 class QueryParsingAgent:
     def __init__(self):
         # Load environment variables

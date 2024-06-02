@@ -11,7 +11,13 @@ from crewai_tools import (
     SerperDevTool,
     WebsiteSearchTool
 )
+"""
+This agent is responsible for verifying the legitimacy of a link
 
+If the link is not legitimate, the agent will save the link to a file.
+Currently, we aren't doing anything with saved links. But in the future, we could use them
+for training or for checking against the cache.
+"""
 class LinkVerifyingAgent:
     def __init__(self):
         # Load environment variables
