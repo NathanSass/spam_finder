@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 # spam_finder
-=======
-# spam_finder
-
 
 
 
@@ -30,5 +26,3 @@ pip install fastapi
 pip install uvicorn
 uvicorn main:app --reload # runs the server
 ```
-
->>>>>>> Stashed changes
