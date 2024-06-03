@@ -37,7 +37,7 @@ class QueryParsingAgent:
             description=f'Classify the source type of the following message and clean it if necessary: "{message}"',
             expected_output='''
                 A JSON object with the following keys:
-                - message_type: The type of message (e.g. email, webpage, sms, iMessage, etc)
+                - message_type: The type of message - one of EMAIL, WEBPAGE, SMS, IMESSAGE
                 - message: The cleaned message
                 - links: A list of links found in the message
             ''',
