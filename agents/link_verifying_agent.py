@@ -33,8 +33,8 @@ class LinkVerifyingAgent:
         # Define the agent
         self.researcher = Agent(
             role='Spam link verifier',
-            goal='Provide validated results that a website exists and is not a scam or spam website',
-            backstory='An expert analyst with a strong sense of duty to sniff out scams and explain how they know the links are legitimate',
+            goal='Provide valid reasoning as to why a website could be considered illegitimate, not trustworthy or related to scam or spam',
+            backstory='An expert analyst with a strong sense of duty to ensure users do not access websites that would compromise their safety on the internet',
             tools=[search_tool, web_rag_tool],
             verbose=True
         )
@@ -47,8 +47,15 @@ class LinkVerifyingAgent:
             expected_output='''
                 A JSON object with the following keys:
                 - links: A list of links that have been checked
-                - scams: A list of scams that the link may be a part of ex. ["scam", "phishing", etc]
-                - reasons: A list of the top 3 reasons why the link is either legitimate or not trustworthy
+                - categories: For each harmful category that the link may be associated with, provide a confidence score between 0.0 and 1.0 with precision of 3.
+                "categories": {
+                    "advertising_and_promotion": 0.2367,
+                    "phishing_and_fraud": 0.4812,
+                    "financial_scam": 0.3158,
+                    "malware_distribution": 0.0924,
+                    "adult_content": 0.0075
+                }
+                - reasons: A list of the top three reasons why the link is not legitimate and the classification outcome
             ''',
             agent=self.researcher
         )
@@ -61,24 +68,30 @@ class LinkVerifyingAgent:
         )
 
         # Start the crew
-        result =  crew.kickoff()
-        self.persist_bad_links(json.loads(result))
+        result =  json.loads(crew.kickoff())
+        scores = result['categories']
+
+        # Find the category with the highest score
+        max_category = max(scores, key=scores.get)
+        result['winning_category'] = max_category
+        
+        #self.persist_bad_links(result)
         return result
 
     
     def persist_bad_links(self, classification_result: Dict[str, Any]):  # Change type annotation
         classification_output = classification_result  # No need to parse JSON since it's already Dict
         links = classification_output.get("links", "")
-        scams = classification_output.get("scams", "")
-        if not scams:
-            print("No scams found")
+        category = classification_output.get("winning_category", "")
+        if not category:
+            print("No winning category found")
             return
         
         for link in links:
             print(f"Link: {link}")
-            self.save_bad_link(link, scams)
+            #self.save_bad_link(link, winning_category)
 
-    def save_bad_link(self, link: str, scams: List[str]):  # Change type annotation
+    def save_bad_link(self, link: str, winning_category: str):  # Change type annotation
         with open("store/bad_links.txt", "a") as file:
-            file.write(f"{link} : {scams}\n")
+            file.write(f"{link} : {winning_category}\n")
 
