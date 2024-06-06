@@ -1,10 +1,7 @@
 # spam_finder
-
-
+[production](https://spam-finder.fly.io)
 
 ### to get started
-
-
 
 create an .env file with:
 
