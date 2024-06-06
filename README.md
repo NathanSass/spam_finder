@@ -32,7 +32,7 @@ uvicorn app.main:app --reload # runs the server
 Download [docker desktop](https://www.docker.com/products/docker-desktop/)
 
 ```
-docker --build-arg ENVIRONMENT=development build -t myimage .
+docker build -t myimage .
 docker run -d --name mycontainer -p 80:80 myimage
 ```
 

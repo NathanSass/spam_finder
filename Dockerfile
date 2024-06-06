@@ -4,14 +4,17 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /code
 
-
 # Install build dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc python3-dev && \
+    apt-get install -y --no-install-recommends gcc python3-dev python3-virtualenv && \
     rm -rf /var/lib/apt/lists/*
 
+RUN python -m venv .venv
+RUN . /code/.venv/bin/activate
+
 # Copy only the pyproject.toml and poetry.lock files
-COPY pyproject.toml poetry.lock* /code/
+COPY pyproject.toml /code/
+COPY poetry.lock* /code/
 
 # Install poetry
 RUN pip install --no-cache-dir poetry
@@ -23,11 +26,8 @@ RUN poetry install --no-root
 COPY app /code/app
 COPY agents /code/agents
 COPY score_evaluator /code/score_evaluator
-# Conditionally copy .env file only if running locally
-ARG ENVIRONMENT=production
-RUN if [ "$ENVIRONMENT" = "development" ]; then \
-        COPY .env /code/.env; \
-    fi
+# Only do this if running locally
+# COPY .env /code/
 
 # Expose port 80
 EXPOSE 80

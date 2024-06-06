@@ -4,7 +4,7 @@
 **/.credentials
 **/.venv
 **/venv
-**/.env
+# **/.env
 **/poetry.lock
 **/store/*
 
