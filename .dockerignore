@@ -1,0 +1,20 @@
+# flyctl launch added from .gitignore
+**/__pycache__
+
+**/.credentials
+**/.venv
+**/venv
+**/.env
+**/poetry.lock
+**/store/*
+
+# flyctl launch added from venv/lib/python3.12/site-packages/crewai/cli/templates/.gitignore
+venv/lib/python3.12/site-packages/crewai/cli/templates/**/.env
+venv/lib/python3.12/site-packages/crewai/cli/templates/**/__pycache__
+
+# flyctl launch added from venv/lib/python3.12/site-packages/embedchain/deployment/modal.com/.gitignore
+venv/lib/python3.12/site-packages/embedchain/deployment/modal.com/**/.env
+
+# flyctl launch added from venv/lib/python3.12/site-packages/embedchain/deployment/render.com/.gitignore
+venv/lib/python3.12/site-packages/embedchain/deployment/render.com/**/.env
+fly.toml

@@ -23,7 +23,11 @@ RUN poetry install --no-root
 COPY app /code/app
 COPY agents /code/agents
 COPY score_evaluator /code/score_evaluator
-COPY .env /code/.env
+# Conditionally copy .env file only if running locally
+ARG ENVIRONMENT=production
+RUN if [ "$ENVIRONMENT" = "development" ]; then \
+        COPY .env /code/.env; \
+    fi
 
 # Expose port 80
 EXPOSE 80
