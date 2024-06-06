@@ -1,8 +1,8 @@
 from typing import Union
 from fastapi import FastAPI
-
 from agents.link_verifying_agent import LinkVerifyingAgent
 from agents.query_parse_agent import QueryParsingAgent
+
 from score_evaluator.score_evaluator import ScoreEvaluator
 
 app = FastAPI()

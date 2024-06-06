@@ -24,5 +24,7 @@ Run the app
 ```
 pip install fastapi
 pip install uvicorn
-uvicorn main:app --reload # runs the server
+uvicorn app.main:app --reload # runs the server
 ```
+
+ docker build -t myimage .
