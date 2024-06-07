@@ -4,4 +4,6 @@ __pycache__/
 .venv/
 .env
 poetry.lock
+credentials.json
+token.pickle
 store/*
