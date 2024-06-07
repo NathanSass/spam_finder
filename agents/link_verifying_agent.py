@@ -34,6 +34,7 @@ class LinkVerifyingAgent:
 
         # Define the agent
         self.researcher = Agent(
+            llm=llm,
             role="Spam link verifier",
             goal="Provide valid reasoning as to why a website could be considered illegitimate, not trustworthy or related to scam or spam",
             backstory="An expert analyst with a strong sense of duty to ensure users do not access websites that would compromise their safety on the internet",
