@@ -26,6 +26,8 @@ RUN poetry install --no-root
 COPY app /code/app
 COPY agents /code/agents
 COPY score_evaluator /code/score_evaluator
+COPY utils /code/utils
+COPY integrations /code/integrations
 # Only do this if running locally
 # COPY .env /code/
 

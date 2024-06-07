@@ -3,6 +3,7 @@ import re
 import json
 from dotenv import load_dotenv, find_dotenv
 from crewai import Agent, Task, Crew
+from langchain_openai import OpenAI
 
 """
 This agent will operate on a vague query and return formatted json which will be more easily parceable
@@ -20,10 +21,12 @@ class QueryParsingAgent:
         # Load environment variables
         load_dotenv(find_dotenv())
         # Define the agent for classifying messages
+        llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), temperature=0.7)
         self.classifier = Agent(
             role="Message classifier",
             goal="Determine the source type of the message and clean it if necessary",
             backstory="An AI specialized in identifying the nature of communication and preparing it for further analysis",
+            llm=llm,
             verbose=True,
         )
 
