@@ -1,15 +1,15 @@
 scoring_system:
   categories:
     advertising_and_promotion:
-      weight: 0.2
+      weight: 0.15
     phishing_and_fraud:
-      weight: 0.4
-    financial_scam:
       weight: 0.3
+    financial_scam:
+      weight: 0.25
     malware_distribution:
-      weight: 0.1
+      weight: 0.25
     adult_content:
-      weight: 0.1
+      weight: 0.05
   thresholds: # thresholds for which the link is considered illegitimate
-    single_category: 0.65 # if any one category scores more than this value
-    overall_score: 0.5 # max score with weighted categories taken into account
+    single_category: 0.50 # if any one category scores more than this value
+    overall_score: 0.4 # max score with weighted categories taken into account

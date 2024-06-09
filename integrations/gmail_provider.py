@@ -1,8 +1,6 @@
-import re
 import os.path
 import base64
 import pickle
-from email.parser import BytesParser
 import email
 
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -57,6 +55,7 @@ class GmailProvider:
             .modify(userId="me", id=message_id, body={"addLabelIds": [label]})
             .execute()
         )
+        print("Label updated on message.")
 
     def mark_as_read(self, message_id):
         """
